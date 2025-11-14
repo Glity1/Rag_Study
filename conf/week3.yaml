@@ -1,0 +1,49 @@
+# 3주차 임베딩 & 벡터 스토어 구축 기본 설정
+
+# Hydra 기본 설정 (현재 YAML 우선 적용)
+defaults:
+  - _self_
+
+## Hydra 런타임 기본값
+hydra:
+  run:
+    # 실행 로그 저장 경로 (날짜 기반)
+    dir: outputs/week3/${now:%Y%m%d_%H%M%S}
+  job:
+    # 작업 시 현재 작업 디렉터리 유지
+    chdir: false
+
+# 프로젝트 루트 경로 (상대 경로 계산에 활용)
+project_root: ${hydra:runtime.cwd}
+
+## Week2 산출물 위치 정보
+week2:
+  # Week2 결과가 저장된 기본 경로
+  processed_dir: ${project_root}/data/processed
+  # 최신 실행 위치를 가리키는 포인터 파일
+  pointer_path: ${week2.processed_dir}/latest_week2.json
+
+input:
+  # 특정 청킹 결과 JSON 파일 경로 (직접 지정 시 사용)
+  chunk_json: null
+  # 청킹 결과 폴더 경로 (전략별 JSON/텍스트 포함)
+  chunks_dir: null
+  # 처리할 전략 리스트 ("all"이면 폴더 내 전체)
+  strategies: ["all"]
+  # true일 경우 최신 폴더만 처리
+  latest_only: false
+
+embedding:
+  # SentenceTransformer 모델 이름
+  model_name: sentence-transformers/all-MiniLM-L6-v2
+  # 문서별 접두어(필요 시 태깅 용도)
+  doc_prefix: null
+  # 임베딩 벡터 파일 저장 여부
+  save_embeddings: false
+
+vector_store:
+  # FAISS 인덱스 저장 기본 경로
+  base_dir: ${project_root}/data/processed/index
+  # Week2 slug 구조를 그대로 따라갈지 여부
+  use_week2_slug: true
+

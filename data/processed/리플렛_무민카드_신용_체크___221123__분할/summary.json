@@ -1,0 +1,37 @@
+{
+  "pdf": "C:\\Users\\qqtta\\OneDrive\\Desktop\\rag\\Rag_Study\\data\\raw\\[리플렛] 무민카드(신용,체크)_(221123)_분할.pdf",
+  "strategies": {
+    "recursive": {
+      "count": 7,
+      "avg_size": 530.4285714285714,
+      "min_size": 364,
+      "max_size": 586
+    },
+    "fixed": {
+      "count": 7,
+      "avg_size": 554.5714285714286,
+      "min_size": 282,
+      "max_size": 600
+    },
+    "sentence": {
+      "count": 4,
+      "avg_size": 819.0,
+      "min_size": 311,
+      "max_size": 1410
+    },
+    "paragraph": {
+      "count": 4,
+      "avg_size": 819.0,
+      "min_size": 499,
+      "max_size": 966
+    },
+    "semantic": {
+      "count": 15,
+      "avg_size": 217.66666666666666,
+      "min_size": 4,
+      "max_size": 646
+    }
+  },
+  "ocr_enabled": true,
+  "ocr_lang": "kor+eng"
+}

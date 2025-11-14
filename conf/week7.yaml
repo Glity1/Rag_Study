@@ -1,0 +1,24 @@
+# 7주차 Dash UI 실행 설정
+
+# Hydra 기본 설정 (현재 파일 기준)
+defaults:
+  - _self_
+
+## Hydra 실행 옵션
+hydra:
+  run:
+    # 실행 로그 저장 경로
+    dir: outputs/week7/${now:%Y%m%d_%H%M%S}
+  job:
+    # 실행 시 작업 디렉터리를 변경하지 않음
+    chdir: false
+
+ui:
+  # Dash 서버 호스트/포트 설정
+  host: 0.0.0.0
+  port: 8050
+  # Dash 디버그 모드 사용 여부
+  debug: false
+  # FastAPI RAG 엔드포인트 주소
+  api_endpoint: http://localhost:8000/query
+

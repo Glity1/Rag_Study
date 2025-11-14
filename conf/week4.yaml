@@ -1,0 +1,52 @@
+# 4주차 RAG 체인 및 평가 실행 기본 설정
+
+# Hydra 기본 설정 (해당 YAML의 설정을 그대로 적용)
+defaults:
+  - _self_
+
+## Hydra 런타임 관련 옵션
+hydra:
+  run:
+    # 실행 결과 저장 폴더(날짜 기반)
+    dir: outputs/week4/${now:%Y%m%d_%H%M%S}
+  job:
+    # 실행 중 현재 디렉터리 유지
+    chdir: false
+
+# 프로젝트 루트 경로 (상대 경로 계산용)
+project_root: ${hydra:runtime.cwd}
+
+week3:
+  # Week3에서 생성된 FAISS 인덱스 루트 경로
+  index_root: ${project_root}/data/processed/index
+
+rag:
+  # 기본 테스트 질문
+  question: "그랜드코리아레저의 코로나 대응 전략을 요약해줘."
+  # 검색할 문서 수(K값)
+  top_k: 5
+  # true이면 QA 실행을 건너뜀 (예: 인덱스 탐색만 확인 시)
+  skip_qa: false
+  # Gemini API 키 (환경변수나 .env에서 주입 가능)
+  google_key: null
+  # 사용할 Gemini 모델 이름
+  model: "gemini-2.5-flash"
+  # MMR (Maximal Marginal Relevance) 검색 사용 여부
+  use_mmr: false
+  # MMR 다양성 파라미터 (0.0=유사도만, 1.0=다양성만, 기본값 0.5)
+  mmr_diversity: 0.5
+  # LLM temperature 파라미터
+  temperature: 0.0
+  # LLM top_p 파라미터 (None이면 기본값 사용)
+  top_p: null
+  # LLM top_k 파라미터 (None이면 기본값 사용, 주의: 검색 top_k와는 별개)
+  top_k_llm: null
+
+evaluation:
+  # 검증용 QA 페어 파일 경로 (지정 시 Recall 계산)
+  validation_path: null  # 예: ${project_root}/data/eval/validation.json
+
+discovery:
+  # 인덱스 자동 탐색 시 하위 폴더를 재귀적으로 뒤질지 여부
+  use_recursive_search: true  # index_root 아래 모든 index.faiss 탐색
+

@@ -1,0 +1,76 @@
+# 2주차 PDF 전처리 및 청킹 파이프라인 기본 설정
+
+# Hydra 기본 설정 (현재 파일을 우선 적용)
+defaults:
+  - _self_
+
+## Hydra 런타임 관련 설정
+hydra:
+  run:
+    # 실행 로그를 날짜 기반 폴더로 분리 저장
+    dir: outputs/week2/${now:%Y%m%d_%H%M%S}
+  job:
+    # 작업 실행 시 현재 위치를 변경하지 않음
+    chdir: false
+
+# 프로젝트 루트 경로 (상대 경로 계산을 쉽게 하기 위해 지정)
+project_root: ${hydra:runtime.cwd}
+
+## 데이터 입출력 관련 설정
+data:
+  # 원본 PDF가 위치한 폴더
+  raw_dir: ${project_root}/data/raw
+
+outputs:
+  # 청킹/전처리 결과 저장 폴더
+  base_dir: ${project_root}/data/processed
+  # slug 기반 하위 폴더 생성 여부
+  use_slug_subdir: true
+  # 이미지 추출 결과 저장 폴더 (미사용 시 null)
+  image_dir: null
+  # 최신 실행 경로를 기록하는 포인터 파일
+  latest_pointer: ${project_root}/data/processed/latest_week2.json
+
+pdf:
+  # 처리할 PDF 리스트 (빈 배열이면 raw_dir 전체 대상)
+  inputs: []
+  # 너무 짧은 텍스트 블록은 필터링
+  min_text_length: 10
+  # 이미지 플레이스홀더 삽입 여부 (이미지 정보를 텍스트에 포함)
+  insert_image_placeholders: false
+  # 이미지 플레이스홀더 형식 (name, page, width, height 변수 사용 가능)
+  image_placeholder_format: "Image: [{name}] (Page {page}, {width}x{height})"
+  ocr:
+    # OCR 사용 여부 (스캔본 대비)
+    enable: true
+    # Tesseract 언어 설정
+    language: kor+eng
+
+chunking:
+  # 실행할 청킹 전략 목록
+  strategies: ["recursive", "fixed", "sentence", "paragraph", "semantic"]
+
+  fixed:
+    # 고정 길이 청킹 설정
+    chunk_size: 600
+    overlap: 100
+
+  recursive:
+    # RecursiveCharacterTextSplitter 설정
+    chunk_size: 600
+    overlap: 100
+
+  sentence:
+    # 문장 단위 청킹 시 묶을 문장 수
+    sentences_per_chunk: 4
+
+  paragraph:
+    # 문단 단위 청킹 시 최대 글자 수
+    max_chars: 900
+
+  semantic:
+    # 의미 기반 청킹 설정
+    max_chunk_size: 900
+    model: sentence-transformers/all-MiniLM-L6-v2
+    similarity_threshold: 0.75
+

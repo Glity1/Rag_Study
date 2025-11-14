@@ -1,0 +1,37 @@
+{
+  "pdf": "C:\\Users\\qqtta\\OneDrive\\Desktop\\rag\\Rag_Study\\data\\raw\\[리플릿] BLISS.5(2504).pdf",
+  "strategies": {
+    "recursive": {
+      "count": 56,
+      "avg_size": 580.6785714285714,
+      "min_size": 481,
+      "max_size": 599
+    },
+    "fixed": {
+      "count": 56,
+      "avg_size": 596.4821428571429,
+      "min_size": 403,
+      "max_size": 600
+    },
+    "sentence": {
+      "count": 56,
+      "avg_size": 497.07142857142856,
+      "min_size": 90,
+      "max_size": 2291
+    },
+    "paragraph": {
+      "count": 1,
+      "avg_size": 27903.0,
+      "min_size": 27903,
+      "max_size": 27903
+    },
+    "semantic": {
+      "count": 188,
+      "avg_size": 147.36170212765958,
+      "min_size": 2,
+      "max_size": 1769
+    }
+  },
+  "ocr_enabled": true,
+  "ocr_lang": "kor+eng"
+}

@@ -1,0 +1,58 @@
+x-base-service: &base-service
+  image: rag-study
+  build:
+    context: .
+    dockerfile: Dockerfile
+  env_file:
+    - .env
+  volumes:
+    - ./data:/app/data
+    - ./conf:/app/conf
+    - ./outputs:/app/outputs
+  working_dir: /app
+  entrypoint: ["python"]
+
+services:
+  week1:
+    <<: *base-service
+    command: src/week1/week1_hands_on.py
+    profiles: ["week1"]
+
+  week2:
+    <<: *base-service
+    command: src/week2/run_week2.py
+    profiles: ["week2"]
+
+  week3:
+    <<: *base-service
+    command: src/week3/run_week3.py
+    profiles: ["week3"]
+
+  week4:
+    <<: *base-service
+    command: src/week4/run_week4.py
+    profiles: ["week4"]
+
+  week5:
+    <<: *base-service
+    command: src/week5/run_week5.py
+    profiles: ["week5"]
+
+  week6:
+    <<: *base-service
+    command: src/week6/run_week6.py
+    ports:
+      - "8000:8000"
+    profiles: ["week6", "api", "full"]  # full profile로 함께 실행 가능
+
+  week7:
+    <<: *base-service
+    command:
+      - src/week7/run_week7.py
+      - ui.api_endpoint=http://week6:8000/query
+    ports:
+      - "8050:8050"
+    depends_on:
+      - week6
+    profiles: ["week7", "ui", "full"]  # full profile로 함께 실행 가능
+

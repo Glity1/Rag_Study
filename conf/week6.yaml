@@ -1,0 +1,47 @@
+# 6주차 FastAPI RAG 서버 실행 설정
+
+# Hydra 기본 설정 (자체 설정 우선 적용)
+defaults:
+  - _self_
+
+## Hydra 실행 옵션
+hydra:
+  run:
+    # 실행 로그 저장 경로
+    dir: outputs/week6/${now:%Y%m%d_%H%M%S}
+  job:
+    # 현재 작업 디렉터리 유지
+    chdir: false
+
+paths:
+  # Week3에서 만든 인덱스 루트 경로
+  index_root: ${hydra:runtime.cwd}/data/processed/index
+  # 최신 Week2 결과를 가리키는 포인터 파일
+  latest_pointer: ${hydra:runtime.cwd}/data/processed/latest_week2.json
+
+server:
+  # FastAPI 서버 바인딩 호스트/포트
+  host: 0.0.0.0
+  port: 8000
+  # 개발 편의를 위한 auto-reload 사용 여부
+  reload: false
+
+rag:
+  # FastAPI에서 사용할 Gemini 모델 이름
+  model_name: gemini-2.5-flash
+  # 실행 시 GOOGLE_API_KEY 존재 확인
+  ensure_google_key: true
+  # LLM 파라미터
+  temperature: 0.0
+  top_p: null  # LLM top_p 파라미터 (None이면 기본값 사용)
+  top_k: null  # LLM top_k 파라미터 (None이면 기본값 사용)
+  # MMR 검색 설정
+  use_mmr: false  # MMR 검색 사용 여부
+  mmr_diversity: 0.5  # MMR 다양성 파라미터 (0.0~1.0)
+
+index_selection:
+  # 포인터 파일을 우선 참조할지
+  prefer_pointer: true
+  # 인덱스 루트 하위를 재귀적으로 검색할지
+  recursive_search: true
+

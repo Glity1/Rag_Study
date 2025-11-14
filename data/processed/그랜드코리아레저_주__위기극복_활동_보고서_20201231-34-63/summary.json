@@ -1,0 +1,37 @@
+{
+  "pdf": "C:\\Users\\qqtta\\OneDrive\\Desktop\\rag\\Rag_Study\\data\\raw\\그랜드코리아레저(주)_위기극복 활동 보고서_20201231-34-63.pdf",
+  "strategies": {
+    "recursive": {
+      "count": 25,
+      "avg_size": 537.88,
+      "min_size": 125,
+      "max_size": 598
+    },
+    "fixed": {
+      "count": 24,
+      "avg_size": 582.7083333333334,
+      "min_size": 185,
+      "max_size": 600
+    },
+    "sentence": {
+      "count": 13,
+      "avg_size": 897.8461538461538,
+      "min_size": 29,
+      "max_size": 1383
+    },
+    "paragraph": {
+      "count": 3,
+      "avg_size": 3893.6666666666665,
+      "min_size": 125,
+      "max_size": 7355
+    },
+    "semantic": {
+      "count": 50,
+      "avg_size": 232.7,
+      "min_size": 3,
+      "max_size": 1143
+    }
+  },
+  "ocr_enabled": true,
+  "ocr_lang": "kor+eng"
+}
